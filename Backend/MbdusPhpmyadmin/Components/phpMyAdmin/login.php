@@ -1,4 +1,5 @@
 <?php
+//changed
 $apiKey = $_GET['apiKey'];
 $includeDir = realpath(getcwd() . '/../../../../../../../../');
 $dbConfig = include($includeDir . '/config.php');
