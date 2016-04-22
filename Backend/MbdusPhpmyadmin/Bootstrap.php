@@ -7,7 +7,7 @@
  * @author Mathias Bauer <info@mbdus.de>
  */
 class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Components_Plugin_Bootstrap {
-	
+
 	/**
 	 * Install plugin method
 	 *
@@ -19,28 +19,28 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 		} catch ( Exception $exc ) {
 			return array (
 					'success' => false,
-					'message' => $exc->getMessage () 
+					'message' => $exc->getMessage ()
 			);
 		}
 		return array (
 				'success' => true,
 				'invalidateCache' => array (
-						'backend' 
-				) 
+						'backend'
+				)
 		);
 		return true;
 	}
-	
+
 	/**
 	 * Create events subscriptions
 	 *
 	 * @return void
 	 */
 	protected function registerEvents() {
-		
+
 		$this->subscribeEvent ( 'Enlight_Controller_Dispatcher_ControllerPath_Backend_MbdusPhpmyadmin', 'onGetControllerPathBackend' );
 	}
-	
+
 	/**
 	 * function to get the shop basepath
 	 *
@@ -54,16 +54,16 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 			$shopId = Shopware ()->Db ()->fetchOne ( $sql );
 		}
 		$sql = '
-          SELECT concat(host,IF(base_path IS NULL,"",base_path), IF(base_url IS NULL,"",base_url)) as url
-          FROM s_core_shops
-          WHERE id=:id';
+			SELECT concat(host,IF(base_path IS NULL,"",base_path), IF(base_url IS NULL,"",base_url)) as url
+			FROM s_core_shops
+			WHERE id=:id';
 		$params = array (
 				':id' => $shopId
 		);
 		$url = Shopware ()->Db ()->fetchOne ( $sql, $params );
 		return $url;
 	}
-	
+
 	/**
 	 * Return the controllerpath of this plugin
 	 *
@@ -72,7 +72,7 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 	public function onGetControllerPathBackend(Enlight_Event_EventArgs $args) {
 		return $this->Path () . '/Controllers/Backend/MbdusPhpmyadmin.php';
 	}
-	
+
 	/**
 	 * Get version of this plugin to display in manager
 	 *
@@ -81,7 +81,7 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 	public function getVersion() {
 		return '1.0.0';
 	}
-	
+
 	/**
 	 * Get label of this plugin to display in manager
 	 *
@@ -90,7 +90,7 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 	public function getLabel() {
 		return 'Mbdus Phpmyadmin';
 	}
-	
+
 	/**
 	 * Get information of this plugin to display in manager
 	 *
@@ -103,7 +103,7 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 				'author' => 'mbdus - Softwareentwicklung',
 				'description' => 'PhpMyAdmin für schnellen Zugriff auf die Datenbank (/MbdusPhpMyAdmin an URL h&auml;ngen)',
 				'support' => 'info@mbdus.de',
-				'link' => 'http://www.mbdus.de' 
+				'link' => 'http://www.mbdus.de'
 		);
 	}
 }
