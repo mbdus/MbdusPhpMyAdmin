@@ -11,7 +11,7 @@ class Shopware_Controllers_Backend_MbdusPhpmyadmin extends Shopware_Controllers_
 	 */
 	public function indexAction(){
 		$userId = Shopware()->Auth()->getIdentity()->id;
-        $apiKey = Shopware()->Db()->fetchOne('SELECT apiKey FROM s_core_auth WHERE id=?',array($userId));
+		$apiKey = Shopware()->Db()->fetchOne('SELECT apiKey FROM s_core_auth WHERE id=?',array($userId));
 		if(isset($apiKey)){
 			$url = 'http://'.$this->getBasePath().'/engine/Shopware/Plugins/Community/Backend/MbdusPhpmyadmin/Components/phpMyAdmin/login.php?apiKey='.$apiKey;
 		}
@@ -21,10 +21,10 @@ class Shopware_Controllers_Backend_MbdusPhpmyadmin extends Shopware_Controllers_
 		$path = realpath(dirname(__FILE__));
 		$filepath = $path . '/../../Components/phpMyAdmin/config.inc.php';
 		chmod($filepath, 0775);
-		header('Location: '.$url);		
+		header('Location: '.$url);
 		exit;
 	}
-	
+
 	/**
 	 * @return mixed
 	 */
