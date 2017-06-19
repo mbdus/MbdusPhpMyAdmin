@@ -1,8 +1,8 @@
 # MbdusPhpMyAdmin
-Shopware-Plugin um PhpMyAdmin schnell aufrufen zu kˆnnen
+Shopware-Plugin um PhpMyAdmin schnell aufrufen zu k√∂nnen
 
 1. Laden Sie die Plugin Dateien aus dem Ordner MbdusPhpmyadmin per FTP nach engine/Shopware/Plugins/Community/Backend  
-2. Ihr Shopware-Benutzer benˆtigt API-Zugangsrechte und einen API-Key -> Benutzerverwaltung
-3. Unter Benutzerverwaltung -> Regeln & Berechtigungen bei "mbdusphpmyadmin" die Rechte f¸r den Benutzer setzen 
+2. Ihr Shopware-Benutzer ben√∂tigt API-Zugangsrechte und einen API-Key -> Benutzerverwaltung
+3. Unter Benutzerverwaltung -> Regeln & Berechtigungen bei "mbdusphpmyadmin" die Rechte f√ºr den Benutzer setzen 
 4. Leeren Sie den Cache und laden Sie das Backend neu.
-5. Im Backend kˆnnen Sie unter Einstellungen -> PhpMyAdmin jetzt PhpMyAdmin ˆffnen ohne Zugangsdaten eingeben zu m¸ssen.
+5. Im Backend k√∂nnen Sie unter Einstellungen -> PhpMyAdmin jetzt PhpMyAdmin √∂ffnen ohne Zugangsdaten eingeben zu m√ºssen.
