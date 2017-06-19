@@ -164,7 +164,7 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 	 * @return string
 	 */
 	public function getVersion() {
-		return '1.0.0';
+		return '1.0.1';
 	}
 
 	/**
