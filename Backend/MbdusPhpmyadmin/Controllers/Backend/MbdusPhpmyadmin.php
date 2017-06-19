@@ -7,6 +7,13 @@
 class Shopware_Controllers_Backend_MbdusPhpmyadmin extends Shopware_Controllers_Backend_ExtJs
 {
 	/**
+	 * Inits ACL-Permissions
+	 */
+	protected function initAcl() {
+		$this->addAclPermission ( 'read', 'Insufficient Permissions' );
+	}
+	
+	/**
 	 * index action for initial the phpmyadmin script
 	 */
 	public function indexAction(){

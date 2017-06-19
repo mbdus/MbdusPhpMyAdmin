@@ -30,6 +30,60 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 		);
 		return true;
 	}
+	
+	/**
+	 * Update plugin method
+	 *
+	 * @return bool
+	 */
+	public function update($oldVersion) {
+		$this->registerEvents ();
+		return true;
+	}
+	
+	/**
+	 * create acl rights for phpmyadmin
+	 */
+	public function createAclResource()
+	{
+		// If exists: find existing MbdusPhpmyadmin resource
+		$pluginId = Shopware()->Db()->fetchRow(
+				'SELECT pluginID FROM s_core_acl_resources WHERE name = ? ',
+				array("mbdusphpmyadmin")
+		);
+		$pluginId = isset($pluginId['pluginID']) ? $pluginId['pluginID'] : null;
+	
+		if ($pluginId) {
+			// prevent creation of new acl resource
+			return;
+		}
+	
+		$resource = new \Shopware\Models\User\Resource();
+		$resource->setName('mbdusphpmyadmin');
+		$resource->setPluginId($this->getId());
+	
+		foreach (array('read') as $action) {
+			$privilege = new \Shopware\Models\User\Privilege();
+			$privilege->setResource($resource);
+			$privilege->setName($action);
+	
+			Shopware()->Models()->persist($privilege);
+		}
+	
+		Shopware()->Models()->persist($resource);
+	
+		Shopware()->Models()->flush();
+	
+		if($this->assertMinimumVersion('5.2')){
+	
+		}
+		else{
+			Shopware()->Db()->query(
+			'UPDATE s_core_menu SET resourceID = ? WHERE controller = "MbdusPhpmyadmin"',
+			array($resource->getId())
+			);
+		}
+	}
 
 	/**
 	 * Create events subscriptions
@@ -39,6 +93,37 @@ class Shopware_Plugins_Backend_MbdusPhpmyadmin_Bootstrap extends Shopware_Compon
 	protected function registerEvents() {
 
 		$this->subscribeEvent ( 'Enlight_Controller_Dispatcher_ControllerPath_Backend_MbdusPhpmyadmin', 'onGetControllerPathBackend' );
+		$sql = "SELECT name FROM s_core_menu WHERE name = 'PhpMyAdmin'";
+		$name = Shopware ()->Db ()->fetchOne ( $sql );
+		if (empty ( $name )) {
+			if ($this->assertMinimumVersion ( '5.2' )) {
+				$this->createMenuItem(array(
+						'label' => 'PhpMyAdmin',
+						'controller' => '',
+						'class' => 'sprite-ui-scroll-pane-detail',
+						'action' => '',
+						'active' => 1,
+						'onClick' => "window.open('http://".$this->getBasePath()."/backend/MbdusPhpmyadmin','_blank')",
+						'parent' => $this->Menu()->findOneBy(['label' => 'Einstellungen'])
+				));
+			}
+			else{
+				$parent = $this->Menu()->findOneBy('label', 'Einstellungen');
+				$item = $this->createMenuItem(array(
+						'label'      => 'PhpMyAdmin',
+						'class'      => 'sprite-ui-scroll-pane-detail',
+						'active'     => 1,
+						'controller' => '',
+						'onClick'    => "window.open('http://".$this->getBasePath()."/backend/MbdusPhpmyadmin','_blank')",
+						'parent'     => $parent,
+						'style'      => '',
+						'action' 	 => ''
+				));
+				$this->Menu()->addItem($item);
+				$this->Menu()->save();
+			}
+		}
+		$this->createAclResource();
 	}
 
 	/**
